@@ -1,6 +1,7 @@
 package com.dicoding.jetcatsapp.ui
 
 import android.os.Bundle
+import android.window.SplashScreen
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,19 +11,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.dicoding.jetcatsapp.navigation.SetupNavGraph
 import com.dicoding.jetcatsapp.ui.theme.JetCatsAppTheme
+import com.dicoding.jetcatsapp.ui.theme.SplashScreenTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+//            SplashScreenTheme{
+//                val navController = rememberNavController()
+//                SetupNavGraph(navController = navController)
+//            }
             JetCatsAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    JetCatsApp()
+                    val navController = rememberNavController()
+                    SetupNavGraph(navController)
                 }
             }
         }

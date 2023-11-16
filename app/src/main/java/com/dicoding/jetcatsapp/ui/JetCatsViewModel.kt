@@ -16,7 +16,7 @@ class JetCatsViewModel(private val repository: CatsRepository) : ViewModel() {
             .sortedBy { it.name }
             .groupBy { it.name[0] }
     )
-    val groupedHeroes: StateFlow<Map<Char, List<Cat>>> get() = _groupedCats
+    val groupedCats: StateFlow<Map<Char, List<Cat>>> get() = _groupedCats
 
     private val _query = mutableStateOf("")
     val query: State<String> get() = _query
