@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,7 +39,7 @@ import com.dicoding.jetcatsapp.model.CatsData
 import com.dicoding.jetcatsapp.ui.theme.JetCatsAppTheme
 
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @SuppressLint("NotConstructor")
 @Composable
 fun JetCatsApp(
@@ -54,9 +57,9 @@ fun JetCatsApp(
         val showButton: Boolean by remember {
             derivedStateOf { listState.firstVisibleItemIndex > 0 }
         }
-        LazyColumn (
+        LazyColumn(
             state = listState,
-            contentPadding = PaddingValues(bottom = 80.dp)
+//            contentPadding = PaddingValues(bottom = 80.dp)
         ) {
             item {
                 SearchBar(
@@ -65,15 +68,43 @@ fun JetCatsApp(
                     modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 )
             }
-                items(CatsData.cats, key = { it.id }) { cat ->
-                    CatListItem(
-                        name = cat.name,
-                        photoUrl = cat.photoUrl,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateItemPlacement(tween(durationMillis = 100))
-                    )
+            val filteredCats = CatsData.cats.filter {
+                it.name.contains(query, ignoreCase = true) || it.breeds.contains(
+                    query,
+                    ignoreCase = true
+                )
+            }
+            when {
+                filteredCats.isNotEmpty() -> {
+                    items(filteredCats, key = { it.id }) { cat ->
+                        CatListItem(
+                            name = cat.name,
+                            breeds = cat.breeds,
+                            photoUrl = cat.photoUrl,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateItemPlacement(tween(durationMillis = 100))
+                        )
+                    }
                 }
+                else -> {
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.not_found_icon),
+                                contentDescription = "Not Found",
+                                modifier = Modifier
+                                    .size(300.dp)
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -81,6 +112,7 @@ fun JetCatsApp(
 @Composable
 fun CatListItem(
     name: String,
+    breeds: String,
     photoUrl: String,
     modifier: Modifier = Modifier
 ) {
@@ -97,16 +129,24 @@ fun CatListItem(
                 .size(60.dp)
                 .clip(CircleShape)
         )
-        Text(
-            text = name,
-            fontWeight = FontWeight.Medium,
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(start = 16.dp)
-        )
+        ) {
+            Text(
+                text = name,
+                fontWeight = FontWeight.Medium,
+            )
+            Text(
+                text = breeds,
+                fontWeight = FontWeight.Light,
+            )
+        }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
@@ -147,13 +187,14 @@ fun SearchBar(
 //    }
 //}
 //
-//@Preview(showBackground = true)
-//@Composable
-//fun CatsListItemPreview() {
-//    JetCatsAppTheme {
-//        CatListItem(
-//            name = "Persian",
-//            photoUrl = ""
-//        )
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun CatsListItemPreview() {
+    JetCatsAppTheme {
+        CatListItem(
+            name = "Persian",
+            breeds = "Western Breeds",
+            photoUrl = ""
+        )
+    }
+}

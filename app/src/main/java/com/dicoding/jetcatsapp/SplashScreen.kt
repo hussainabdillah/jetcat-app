@@ -30,7 +30,7 @@ fun SplashScreen(navController: NavHostController) {
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(durationMillis = 3000)
     )
-    
+
 
     LaunchedEffect(key1 = true) {
         startAnimation = true
@@ -42,7 +42,7 @@ fun SplashScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BlueSky)
+            .background(MaterialTheme.colorScheme.primary)
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
