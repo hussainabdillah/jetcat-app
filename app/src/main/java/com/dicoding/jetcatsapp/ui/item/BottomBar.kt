@@ -11,12 +11,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import com.dicoding.jetcatsapp.R
 import com.dicoding.jetcatsapp.model.BottomBarItem
+import com.dicoding.jetcatsapp.navigation.Screen
 
 @Composable
 fun BottomBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     NavigationBar(
         modifier = modifier
@@ -24,15 +27,18 @@ fun BottomBar(
         val navigationItems = listOf(
             BottomBarItem(
                 title = stringResource(R.string.menu_home),
-                icon = Icons.Default.Home
+                icon = Icons.Default.Home,
+                screen = Screen.Home
             ),
             BottomBarItem(
                 title = stringResource(R.string.menu_favorite),
-                icon = Icons.Default.Favorite
+                icon = Icons.Default.Favorite,
+                screen = Screen.Favorite
             ),
             BottomBarItem(
                 title = stringResource(R.string.menu_profile),
-                icon = Icons.Default.AccountCircle
+                icon = Icons.Default.AccountCircle,
+                screen = Screen.Profile
             ),
         )
         navigationItems.map {
@@ -46,8 +52,10 @@ fun BottomBar(
                 label = {
                     Text(it.title)
                 },
-                selected = it.title == navigationItems[0].title,
-                onClick = {}
+                selected = it.screen.route == navController.currentDestination?.route,
+                onClick = {
+                    navController.navigate(it.screen.route)
+                }
             )
         }
     }

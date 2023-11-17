@@ -59,7 +59,7 @@ fun JetCatsApp(
     val query by viewModel.query
     Scaffold(
         bottomBar = {
-            BottomBar()
+            BottomBar(navController = navController)
         }
     ) { innerPadding ->
         Box(
