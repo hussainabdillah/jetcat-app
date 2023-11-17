@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -61,54 +62,70 @@ fun JetCatsApp(
             BottomBar()
         }
     ) { innerPadding ->
-        LazyColumn(
+        Box(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
-            item {
-                SearchBar(
-                    query = query,
-                    onQueryChange = viewModel::search,
-                    modifier = Modifier.background(MaterialTheme.colorScheme.background)
-                )
-            }
-            val filteredCats = CatsData.cats.filter {
-                it.name.contains(query, ignoreCase = true) || it.breeds.contains(
-                    query,
-                    ignoreCase = true
-                )
-            }
-            when {
-                filteredCats.isNotEmpty() -> {
-                    items(filteredCats, key = { it.id }) { cat ->
-                        CatListItem(
-                            name = cat.name,
-                            breeds = cat.breeds,
-                            photoUrl = cat.photoUrl,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .animateItemPlacement(tween(durationMillis = 100))
-                        )
-                    }
+            // SearchBar at the top with z-index 1
+            SearchBar(
+                query = query,
+                onQueryChange = viewModel::search,
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .zIndex(1f)
+            )
+            // LazyColumn below the SearchBar
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(top = 90.dp)
+            ) {
+//                item {
+//                    SearchBar(
+//                        query = query,
+//                        onQueryChange = viewModel::search,
+//                        modifier = Modifier
+//                            .background(MaterialTheme.colorScheme.background)
+//                            .zIndex(1f)
+//                    )
+//                }
+                val filteredCats = CatsData.cats.filter {
+                    it.name.contains(query, ignoreCase = true) || it.breeds.contains(
+                        query,
+                        ignoreCase = true
+                    )
                 }
-                else -> {
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.not_found_icon),
-                                contentDescription = "Not Found",
+                when {
+                    filteredCats.isNotEmpty() -> {
+                        items(filteredCats, key = { it.id }) { cat ->
+                            CatListItem(
+                                name = cat.name,
+                                breeds = cat.breeds,
+                                photoUrl = cat.photoUrl,
                                 modifier = Modifier
-                                    .size(300.dp)
                                     .fillMaxWidth()
-                                    .fillMaxHeight()
+                                    .animateItemPlacement(tween(durationMillis = 100))
                             )
+                        }
+                    }
+                    else -> {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.not_found_icon),
+                                    contentDescription = "Not Found",
+                                    modifier = Modifier
+                                        .size(300.dp)
+                                        .fillMaxWidth()
+                                        .fillMaxHeight()
+                                )
+                            }
                         }
                     }
                 }
