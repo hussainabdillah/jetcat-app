@@ -74,6 +74,7 @@ dependencies {
 
 //    koil library
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("com.google.android.engage:engage-core:1.3.1")
 
 
     testImplementation("junit:junit:4.13.2")

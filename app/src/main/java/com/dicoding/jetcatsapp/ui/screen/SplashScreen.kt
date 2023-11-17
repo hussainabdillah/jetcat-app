@@ -1,4 +1,4 @@
-package com.dicoding.jetcatsapp
+package com.dicoding.jetcatsapp.ui.screen
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -18,8 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.dicoding.jetcatsapp.R
 import com.dicoding.jetcatsapp.navigation.Screen
-import com.dicoding.jetcatsapp.ui.theme.BlueSky
 
 import kotlinx.coroutines.delay
 

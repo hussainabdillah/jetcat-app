@@ -1,4 +1,4 @@
-package com.dicoding.jetcatsapp.ui
+package com.dicoding.jetcatsapp.ui.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
