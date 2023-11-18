@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.jetcatsapp.ui.screen.SplashScreen
 import com.dicoding.jetcatsapp.ui.JetCatsApp
+import com.dicoding.jetcatsapp.ui.screen.DetailScreen
+import com.dicoding.jetcatsapp.ui.screen.FavoriteScreen
 import com.dicoding.jetcatsapp.ui.screen.ProfileScreen
 
 
@@ -24,11 +26,16 @@ fun SetupNavGraph(navController: NavHostController) {
             JetCatsApp(navController)
         }
         composable(route = Screen.Favorite.route) {
-            JetCatsApp(navController)
+            FavoriteScreen(navController)
         }
         composable(route = Screen.Profile.route) {
             ProfileScreen(navController)
         }
-
+        composable(route = Screen.Detail.route + "{catId}") { backStackEntry ->
+            val catId = backStackEntry.arguments?.getString("catId")
+            if (catId != null) {
+                DetailScreen(catId, navController)
+            }
+        }
     }
 }

@@ -22,11 +22,12 @@ fun CatListItem(
     name: String,
     breeds: String,
     photoUrl: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.clickable {}
+        modifier = modifier.clickable(onClick = onClick)
     ) {
         AsyncImage(
             model = photoUrl,

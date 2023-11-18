@@ -33,6 +33,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
+import com.dicoding.jetcatsapp.navigation.Screen
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -75,7 +76,10 @@ fun HomeScreen(navController: NavHostController) {
                             photoUrl = cat.photoUrl,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .animateItemPlacement(tween(durationMillis = 100))
+                                .animateItemPlacement(tween(durationMillis = 100)),
+                            onClick = {
+                                navController.navigate(Screen.Detail.route + "/${cat.id}")
+                            }
                         )
                     }
                 }

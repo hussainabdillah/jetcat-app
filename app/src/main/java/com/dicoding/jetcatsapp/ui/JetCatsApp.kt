@@ -38,6 +38,7 @@ import com.dicoding.jetcatsapp.R
 import com.dicoding.jetcatsapp.data.CatsRepository
 import com.dicoding.jetcatsapp.model.BottomBarItem
 import com.dicoding.jetcatsapp.model.CatsData
+import com.dicoding.jetcatsapp.navigation.Screen
 import com.dicoding.jetcatsapp.ui.item.BottomBar
 import com.dicoding.jetcatsapp.ui.item.SearchBar
 import com.dicoding.jetcatsapp.ui.item.CatListItem
@@ -105,7 +106,10 @@ fun JetCatsApp(
                                 photoUrl = cat.photoUrl,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .animateItemPlacement(tween(durationMillis = 100))
+                                    .animateItemPlacement(tween(durationMillis = 100)),
+                                onClick = {
+                                    navController.navigate(Screen.Detail.route + "${cat.id}")
+                                }
                             )
                         }
                     }
