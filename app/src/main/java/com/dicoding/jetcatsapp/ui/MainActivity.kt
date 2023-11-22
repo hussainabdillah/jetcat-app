@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.dicoding.jetcatsapp.navigation.SetupNavGraph
+import com.dicoding.jetcatsapp.navigation.SetupNavHost
 import com.dicoding.jetcatsapp.ui.theme.JetCatsAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    SetupNavGraph(navController)
+                    SetupNavHost(navController)
                 }
             }
         }

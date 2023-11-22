@@ -6,12 +6,7 @@
 
 <!--    Bottom Navigation-->
     <string name="menu_home">Home</string>
-    <string name="menu_favorite">Favorite</string>
     <string name="menu_profile">Profile</string>
     <string name="name">Hussain Abdillah Tugas Kelarno</string>
     <string name="email">hussainkelarno@gmail.com</string>
-
-<!--    Favorite Screen-->
-    <string name="greetings">Hai Hussain Abdillah,</string>
-    <string name="desc_favorite">Berikut list kucing favoritmu!</string>
 </resources>

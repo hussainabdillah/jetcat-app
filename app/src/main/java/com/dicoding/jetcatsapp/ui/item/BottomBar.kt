@@ -31,11 +31,6 @@ fun BottomBar(
                 screen = Screen.Home
             ),
             BottomBarItem(
-                title = stringResource(R.string.menu_favorite),
-                icon = Icons.Default.Favorite,
-                screen = Screen.Favorite
-            ),
-            BottomBarItem(
                 title = stringResource(R.string.menu_profile),
                 icon = Icons.Default.AccountCircle,
                 screen = Screen.Profile

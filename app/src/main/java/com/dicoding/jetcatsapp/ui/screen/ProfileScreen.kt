@@ -15,9 +15,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.dicoding.jetcatsapp.R
 import com.dicoding.jetcatsapp.ui.item.BottomBar
-import com.dicoding.jetcatsapp.ui.theme.JetCatsAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +28,6 @@ fun ProfileScreen(
 ) {
     Scaffold(
         bottomBar = {
-            // BottomBar untuk navigasi di dalam ProfileScreen
             BottomBar(navController = navController)
         }
     ) { innerPadding ->
@@ -82,11 +81,9 @@ fun ProfileScreen(
     }
 }
 
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ProfileScreenPreview() {
-//    JetCatsAppTheme {
-//        ProfileScreen()
-//    }
-//}
+@Preview
+@Composable
+fun ProfileScreenPreview() {
+    val navController = rememberNavController()
+    ProfileScreen(navController = navController)
+}
